@@ -16,7 +16,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>CWeatherReportWindow</string>
+   <string>Sample Weather Report</string>
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget#centralWidget{ 

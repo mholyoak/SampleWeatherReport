@@ -5,22 +5,29 @@ CRestResponse::CRestResponse()
 
 }
 
-CRestResponse::CRestResponse(int error, int code, std::string body) :
-    _error(error),
+CRestResponse::CRestResponse(bool success, int code, std::string body) :
+    _success(success),
     _code(code),
     _body(body)
 {
 
 }
 
-bool CRestResponse::Success() const
+void CRestResponse::SetError(const char* errorMsg)
 {
-    return _error == 0 && _code == 200;
+    _success = false;
+    _errorMessage = errorMsg;
 }
 
-int CRestResponse::GetError() const
+
+bool CRestResponse::RequestSuccess() const
 {
-    return _error;
+    return _success && _code == 200;
+}
+
+bool CRestResponse::Success() const
+{
+    return _success;
 }
 
 int CRestResponse::GetCode() const
@@ -32,3 +39,9 @@ std::string CRestResponse::GetBody() const
 {
     return _body;
 }
+
+std::string CRestResponse::GetErrorMessage() const
+{
+    return _errorMessage;
+}
+

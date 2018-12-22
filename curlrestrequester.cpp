@@ -29,28 +29,45 @@ size_t SaveToString(void* buffer, size_t itemSize, size_t numItems, void* contex
 
 CRestResponse CCurlRestRequester::GetRequest(const std::string& getUrl) const
 {
+    CRestResponse restResponse;
     std::string response;
     CURL *curl;
-    CURLcode res;
 
     curl = curl_easy_init();
     if (curl)
     {
-        res = curl_easy_setopt(curl, CURLOPT_URL, getUrl.c_str());
+        auto res = curl_easy_setopt(curl, CURLOPT_URL, getUrl.c_str());
+        if (res != CURLE_OK)
+        {
+            restResponse.SetError(curl_easy_strerror(res));
+            return restResponse;
+        }
 
         res = curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, &SaveToString);
+        if (res != CURLE_OK)
+        {
+            restResponse.SetError(curl_easy_strerror(res));
+            return restResponse;
+        }
+
         res = curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
+        if (res != CURLE_OK)
+        {
+            restResponse.SetError(curl_easy_strerror(res));
+            return restResponse;
+        }
 
-        /* Perform the request, res will get the return code */
+        // Perform the request, res will get the return code
         res = curl_easy_perform(curl);
-        /* Check for errors */
-        if(res != CURLE_OK)
-        fprintf(stderr, "curl_easy_perform() failed: %s\n",
-                curl_easy_strerror(res));
+        if (res != CURLE_OK)
+        {
+            restResponse.SetError(curl_easy_strerror(res));
+            return restResponse;
+        }
 
-        /* always cleanup */
         curl_easy_cleanup(curl);
     }
 
-    return CRestResponse(0, res, response);
+    // BUGBUG need to get response code from request
+    return CRestResponse(true, 200, response);
 }

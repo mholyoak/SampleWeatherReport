@@ -34,3 +34,14 @@ void CLocationWeather::SetCurrentTemperature(float temperature)
 {
     _currentTemperature = temperature;
 }
+
+std::string CLocationWeather::GetDescription() const
+{
+    return _description;
+}
+
+void CLocationWeather::SetDescription(const std::string& description)
+{
+    _description = description;
+}
+

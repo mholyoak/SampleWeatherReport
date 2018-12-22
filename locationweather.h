@@ -22,10 +22,14 @@ public:
     float       GetCurrentTemperature() const;
     void        SetCurrentTemperature(float temperature);
 
+    std::string GetDescription() const;
+    void        SetDescription(const std::string& description);
+
 private:
     CityName    _cityName;
     QIcon       _icon;
     float       _currentTemperature;
+    std::string _description;
 };
 
 #endif // LOCATIONWEATHER_H

@@ -7,17 +7,21 @@ class CRestResponse
 {
 public:
     CRestResponse();
-    CRestResponse(int error, int code, std::string body);
+    CRestResponse(bool success, int code, std::string body);
 
+    void        SetError(const char* errorMsg);
+
+    bool        RequestSuccess() const;
     bool        Success() const;
-    int         GetError() const;
     int         GetCode() const;
     std::string GetBody() const;
+    std::string GetErrorMessage() const;
 
 private:
-    int         _error;
+    bool        _success;
     int         _code;
     std::string _body;
+    std::string _errorMessage;
 };
 
 #endif // RESTRESPONSE_H

@@ -18,16 +18,37 @@ COpenWeatherMapReporter::~COpenWeatherMapReporter()
 
 CLocationWeather COpenWeatherMapReporter::GetWeather(const CLocationWeather::CityName& cityName) const
 {
-
     CLocationWeather locationWeather;
 
+    auto restResponse = CallCityRestApi(cityName);
 
+    if (restResponse.RequestSuccess())
+    {
+        locationWeather.SetCityName(cityName);
 
-    locationWeather.SetCityName(cityName);
+        locationWeather.SetDescription(restResponse.GetBody());
+    }
 
     return locationWeather;
 }
 
+void ReplaceSubString(std::string& updateString, std::string strToReplace, std::string replacementStr)
+{
+    size_t index = 0;
+    while (index != std::string::npos)
+    {
+         // Locate the substring to replace
+         index = updateString.find(strToReplace, index);
+         if (index != std::string::npos)
+         {
+             /* Make the replacement. */
+             updateString.replace(index, strToReplace.size(), replacementStr);
+
+             /* Advance index forward so the next iteration doesn't pick it up as well. */
+             index += strToReplace.size();
+         }
+    }
+}
 
 CRestResponse COpenWeatherMapReporter::CallCityRestApi(const CLocationWeather::CityName& cityName) const
 {
@@ -35,14 +56,8 @@ CRestResponse COpenWeatherMapReporter::CallCityRestApi(const CLocationWeather::C
     const char* cityNameFmt = "CITYNAME";
     std::string cityWeatherUrl("/data/2.5/weather?q=CITYNAME&units=imperial&APPID=da65fafb6cb9242168b7724fb5ab75e7");
 
-    auto index = cityWeatherUrl.find(cityNameFmt, 0);
-    if (index == std::string::npos)
-    {
-        return CRestResponse(1, 0, "");
-    }
-
-    // Make the replacement.
-    cityWeatherUrl.replace(index, cityName.size(), cityName);
+    ReplaceSubString(cityWeatherUrl, cityNameFmt, cityName);
+    ReplaceSubString(cityWeatherUrl, " ", "%20");
 
     std::ostringstream urlStrStream;
     urlStrStream << sProtocall << sDomainName << cityWeatherUrl;
