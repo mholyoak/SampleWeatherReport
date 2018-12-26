@@ -8,7 +8,15 @@ CRestResponse::CRestResponse()
 CRestResponse::CRestResponse(bool success, int code, std::string body) :
     _success(success),
     _code(code),
-    _body(body)
+    _stringBody(body)
+{
+
+}
+
+CRestResponse::CRestResponse(bool success, int code, BinaryData body) :
+    _success(success),
+    _code(code),
+    _binaryBody(body)
 {
 
 }
@@ -35,9 +43,14 @@ int CRestResponse::GetCode() const
     return _code;
 }
 
-std::string CRestResponse::GetBody() const
+std::string CRestResponse::GetStringBody() const
 {
-    return _body;
+    return _stringBody;
+}
+
+CRestResponse::BinaryData CRestResponse::GetBinaryBody() const
+{
+    return _binaryBody;
 }
 
 std::string CRestResponse::GetErrorMessage() const

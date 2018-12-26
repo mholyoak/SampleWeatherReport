@@ -9,6 +9,7 @@ public:
     virtual ~IRestRequester() {}
 
     virtual CRestResponse GetRequest(const std::string& getUrl) const = 0;
+    virtual CRestResponse GetBinaryRequest(const std::string& getUrl) const = 0;
 
 };
 

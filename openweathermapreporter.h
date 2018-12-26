@@ -18,8 +18,13 @@ public:
 private:
     std::shared_ptr<IRestRequester> _restRequester;
 
-    CRestResponse CallCityRestApi(const CLocationWeather::CityName& cityName) const;
+    CLocationWeather            ParseWeatherJson(const std::string& weatherResponseJson) const;
+    QIcon                       CreateWeatherIcon(const std::string& iconName) const;
+    CRestResponse::BinaryData   DownloadWeatherPng(const std::string& iconName) const;
 
+
+    CRestResponse               CallCityRestApi(const CLocationWeather::CityName& cityName) const;
+    CRestResponse               CallIconRestAPI(const std::string& iconName) const;
 };
 
 #endif // OPENWEATHERMAPREPORTER_H

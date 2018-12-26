@@ -21,7 +21,9 @@ SOURCES += \
     locationweather.cpp \
     openweathermapreporter.cpp \
     restresponse.cpp \
-    curlrestrequester.cpp
+    curlrestrequester.cpp \
+    ThirdParty/jsoncpp/dist/jsoncpp.cpp \
+    weatherwidgetitem.cpp
 
 HEADERS += \
         weatherreportwindow.h \
@@ -30,12 +32,19 @@ HEADERS += \
     openweathermapreporter.h \
     restresponse.h \
     irestrequester.h \
-    curlrestrequester.h
+    curlrestrequester.h \
+    weatherwidgetitem.h
 
 FORMS += \
-        weatherreportwindow.ui
+        weatherreportwindow.ui \
+    weatherwidgetitem.ui
+
+#INCLUDEPATH += /usr/local/include
+INCLUDEPATH += $$PWD/ThirdParty/jsoncpp/include
 
 LIBS += -lcurl
+#libs += -L/usr/local/lib -ljsoncpp
+#libs += -L$$PWD/ThirdParty/jsoncpp -l jsoncpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

@@ -10,7 +10,7 @@ public:
     virtual ~CCurlRestRequester() override;
 
     CRestResponse GetRequest(const std::string& getUrl) const override;
-
+    CRestResponse GetBinaryRequest(const std::string& getUrl) const override;
 };
 
 #endif // CURLRESTREQUESTER_H
