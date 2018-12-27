@@ -19,7 +19,7 @@ private:
     std::shared_ptr<IRestRequester> _restRequester;
 
     CLocationWeather            ParseWeatherJson(const std::string& weatherResponseJson) const;
-    QIcon                       CreateWeatherIcon(const std::string& iconName) const;
+    QPixmap                     CreateWeatherIcon(const std::string& iconName) const;
     CRestResponse::BinaryData   DownloadWeatherPng(const std::string& iconName) const;
 
 

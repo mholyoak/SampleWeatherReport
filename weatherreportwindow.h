@@ -4,6 +4,10 @@
 #include <QMainWindow>
 #include <QListWidgetItem>
 
+#include "weatherwidgetitem.h"
+
+#include <list>
+
 namespace Ui {
 class CWeatherReportWindow;
 }
@@ -21,6 +25,8 @@ private:
 
     QListWidgetItem locationItem;
     QListWidgetItem locationItem2;
+
+    std::list<CWeatherWidgetItem> _weatherWidgetItems;
 };
 
 #endif // WEATHERREPORTWINDOW_H

@@ -15,12 +15,12 @@ void CLocationWeather::SetCityName(CityName cityName)
     _cityName = cityName;
 }
 
-QIcon       CLocationWeather::GetIcon() const
+QPixmap CLocationWeather::GetIcon() const
 {
     return _icon;
 }
 
-void CLocationWeather::SetIcon(QIcon icon)
+void CLocationWeather::SetIcon(QPixmap icon)
 {
     _icon = icon;
 }

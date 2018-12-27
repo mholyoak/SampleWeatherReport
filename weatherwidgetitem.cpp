@@ -12,3 +12,10 @@ CWeatherWidgetItem::~CWeatherWidgetItem()
 {
     delete ui;
 }
+
+void CWeatherWidgetItem::SetWeather(const QPixmap& icon, const std::string& city, float temp)
+{
+    ui->_icon->setPixmap(icon);
+    ui->_city->setText(city.c_str());
+    ui->_temp->setText(std::to_string(temp).c_str());
+}

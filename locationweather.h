@@ -3,7 +3,7 @@
 
 #include <string>
 #include <list>
-#include <QIcon>
+#include <QPixmap>
 
 class CLocationWeather
 {
@@ -16,8 +16,8 @@ public:
     CityName    GetCityName() const;
     void        SetCityName(CityName cityName);
 
-    QIcon       GetIcon() const;
-    void        SetIcon(QIcon icon);
+    QPixmap     GetIcon() const;
+    void        SetIcon(QPixmap icon);
 
     float       GetCurrentTemperature() const;
     void        SetCurrentTemperature(float temperature);
@@ -27,7 +27,7 @@ public:
 
 private:
     CityName    _cityName;
-    QIcon       _icon;
+    QPixmap     _icon;
     float       _currentTemperature;
     std::string _description;
 };

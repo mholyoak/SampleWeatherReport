@@ -4,6 +4,8 @@
 #include "curlrestrequester.h"
 #include "openweathermapreporter.h"
 #include <iostream>
+#include <iomanip>
+#include <sstream>
 
 CWeatherReportWindow::CWeatherReportWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -20,17 +22,19 @@ CWeatherReportWindow::CWeatherReportWindow(QWidget *parent) :
     auto londonWeather = weatherReporter.GetWeather("London");
     std::cout << "Response: " << slcWeather.GetCityName() << " " << slcWeather.GetDescription() << std::endl;
 
-    //QPixmap weatherPixmap("/Users/mholyoak/QtProjects/SampleWeatherReport/04d.png");
-    //QIcon weatherIcon(weatherPixmap);
+    ui->_locationListWidget->setIconSize(QSize(100, 100));
     locationItem.setIcon(slcWeather.GetIcon());
-    locationItem.setText(slcWeather.GetCityName().c_str());
+    std::stringstream cityTempStr;
+    cityTempStr << slcWeather.GetCityName() << "\t" << std::fixed << std::setprecision(1) << slcWeather.GetCurrentTemperature() << "°";
+    locationItem.setText(cityTempStr.str().c_str());
     locationItem.setBackgroundColor(QColor(220, 220, 220));
     ui->_locationListWidget->insertItem(0, &locationItem);
+
     locationItem2.setIcon(londonWeather.GetIcon());
-    locationItem2.setText(londonWeather.GetCityName().c_str());
+    //cityTempStr = londonWeather.GetCityName() + "\t" + std::to_string(londonWeather.GetCurrentTemperature());
+    //locationItem2.setText(cityTempStr.c_str());
     locationItem2.setBackgroundColor(QColor(220, 220, 220));
     ui->_locationListWidget->insertItem(1, &locationItem2);
-
 }
 
 CWeatherReportWindow::~CWeatherReportWindow()

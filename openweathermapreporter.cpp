@@ -58,18 +58,15 @@ CLocationWeather COpenWeatherMapReporter::ParseWeatherJson(const std::string& we
 
 #include <fstream>
 
-QIcon COpenWeatherMapReporter::CreateWeatherIcon(const std::string& iconName) const
+QPixmap COpenWeatherMapReporter::CreateWeatherIcon(const std::string& iconName) const
 {
-    QIcon weatherIcon;
     QPixmap weatherPixmap;
 
     auto pngIcon = DownloadWeatherPng(iconName);
 
     weatherPixmap.loadFromData(pngIcon.data(), pngIcon.size());
 
-    weatherIcon.addPixmap(weatherPixmap);
-
-    return weatherIcon;
+    return weatherPixmap;
 }
 
 CRestResponse::BinaryData COpenWeatherMapReporter::DownloadWeatherPng(const std::string& iconName) const
