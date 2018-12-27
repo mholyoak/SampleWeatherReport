@@ -4,7 +4,9 @@
 #include <QMainWindow>
 #include <QListWidgetItem>
 
-#include <list>
+#include "locationweather.h"
+
+#include <vector>
 
 namespace Ui {
 class CWeatherReportWindow;
@@ -18,11 +20,18 @@ public:
     explicit CWeatherReportWindow(QWidget *parent = nullptr);
     ~CWeatherReportWindow();
 
+private slots:
+    void onDetailButtonclicked();
+    void onAddButtonclicked();
+    void onRemoveButtonclicked();
+    void onListSelectionChanged();
+
 private:
     Ui::CWeatherReportWindow *ui;
 
-    QListWidgetItem locationItem;
-    QListWidgetItem locationItem2;
+    std::vector<CLocationWeather>   _cityNameList;
+
+    void UpdateWeatherList();
 };
 
 #endif // WEATHERREPORTWINDOW_H

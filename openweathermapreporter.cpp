@@ -49,6 +49,10 @@ CLocationWeather COpenWeatherMapReporter::ParseWeatherJson(const std::string& we
     locationWeather.SetCityName(weatherJson["name"].asString());
     locationWeather.SetCurrentTemperature(weatherJson["main"]["temp"].asFloat());
     locationWeather.SetDescription(weatherJson["weather"][0]["description"].asString());
+    locationWeather.SetHiTemperature(weatherJson["main"]["temp_max"].asFloat());
+    locationWeather.SetLowTemperature(weatherJson["main"]["temp_min"].asFloat());
+    locationWeather.SetWindSpeed(weatherJson["wind"]["speed"].asFloat());
+    // BUGBUG should be a loop
     std::string iconName = weatherJson["weather"][0]["icon"].asString();
 
     locationWeather.SetIcon(CreateWeatherIcon(iconName));

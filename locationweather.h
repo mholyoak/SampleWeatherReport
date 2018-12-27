@@ -9,9 +9,9 @@ class CLocationWeather
 {
 public:
     typedef std::string         CityName;
-    typedef std::list<CityName> CityNameList;
 
     CLocationWeather();
+    CLocationWeather(CityName cityName);
 
     CityName    GetCityName() const;
     void        SetCityName(CityName cityName);
@@ -19,17 +19,31 @@ public:
     QPixmap     GetIcon() const;
     void        SetIcon(QPixmap icon);
 
+    std::string GetDescription() const;
+    void        SetDescription(const std::string& description);
+
     float       GetCurrentTemperature() const;
     void        SetCurrentTemperature(float temperature);
 
-    std::string GetDescription() const;
-    void        SetDescription(const std::string& description);
+    float       GetHiTemperature() const;
+    void        SetHiTemperature(float temperature);
+
+    float       GetLowTemperature() const;
+    void        SetLowTemperature(float temperature);
+
+    float       GetWindSpeed() const;
+    void        SetWindSpeed(float speed);
+
+    std::string GetTemperatureString(float temperature) const;
 
 private:
     CityName    _cityName;
     QPixmap     _icon;
-    float       _currentTemperature;
     std::string _description;
+    float       _currentTemperature;
+    float       _hiTemperature;
+    float       _lowTemperature;
+    float       _windSpeed;
 };
 
 #endif // LOCATIONWEATHER_H
