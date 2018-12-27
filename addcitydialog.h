@@ -15,8 +15,18 @@ public:
     explicit CAddCityDialog(QWidget *parent = nullptr);
     ~CAddCityDialog();
 
+    void ShowDialog();
+
+    std::string GetCityName() const;
+
+private slots:
+    void onSaveButtonClicked();
+    void onFindButtonClicked();
+
 private:
     Ui::CAddCityDialog *ui;
+
+    std::string _cityName;
 };
 
 #endif // ADDCITYDIALOG_H

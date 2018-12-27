@@ -4,6 +4,7 @@
 #include "curlrestrequester.h"
 #include "openweathermapreporter.h"
 #include "weatherdetaildialog.h"
+#include "addcitydialog.h"
 
 #include <iostream>
 #include <iomanip>
@@ -46,6 +47,10 @@ CWeatherReportWindow::~CWeatherReportWindow()
 
 void CWeatherReportWindow::UpdateWeatherList()
 {
+    // Set Wait cursor
+    auto saveCursor = this->cursor();
+    this->setCursor(Qt::WaitCursor);
+
     std::shared_ptr<IRestRequester> restRequester = std::make_shared<CCurlRestRequester>();
     COpenWeatherMapReporter weatherReporter(restRequester);
 
@@ -63,6 +68,10 @@ void CWeatherReportWindow::UpdateWeatherList()
         cityWidgetItem->setBackgroundColor(QColor(220, 220, 220));
         ui->_locationListWidget->addItem(cityWidgetItem);
     }
+
+    onListSelectionChanged();
+
+    this->setCursor(saveCursor);
 }
 
 
@@ -79,7 +88,17 @@ void CWeatherReportWindow::onDetailButtonclicked()
 
 void CWeatherReportWindow::onAddButtonclicked()
 {
+    CAddCityDialog addCityDialog(this);
 
+    addCityDialog.ShowDialog();
+
+    auto cityName = addCityDialog.GetCityName();
+    if (!cityName.empty())
+    {
+        _cityNameList.push_back(CLocationWeather(cityName));
+
+        UpdateWeatherList();
+    }
 }
 
 void CWeatherReportWindow::onRemoveButtonclicked()

@@ -34,6 +34,19 @@ CLocationWeather COpenWeatherMapReporter::GetWeather(const CLocationWeather::Cit
     return locationWeather;
 }
 
+CLocationWeather::CityNameList COpenWeatherMapReporter::FindCity(const std::string& findCity) const
+{
+    CLocationWeather::CityNameList cityNameList;
+
+    auto restResponse = CallFindCityRestApi(findCity);
+    if (restResponse.RequestSuccess())
+    {
+        cityNameList = ParseFindCityJson(restResponse.GetStringBody());
+    }
+
+    return cityNameList;
+}
+
 CLocationWeather COpenWeatherMapReporter::ParseWeatherJson(const std::string& weatherResponseJson) const
 {
     CLocationWeather locationWeather;
@@ -43,24 +56,23 @@ CLocationWeather COpenWeatherMapReporter::ParseWeatherJson(const std::string& we
     Json::Value weatherJson;
     std::string errors;
 
-    auto result = jsonReader->parse(weatherResponseJson.c_str(), weatherResponseJson.c_str() + weatherResponseJson.size(), &weatherJson, &errors);
+    auto success = jsonReader->parse(weatherResponseJson.c_str(), weatherResponseJson.c_str() + weatherResponseJson.size(), &weatherJson, &errors);
+    if (success)
+    {
+        locationWeather.SetCityName(weatherJson["name"].asString());
+        locationWeather.SetCurrentTemperature(weatherJson["main"]["temp"].asFloat());
+        locationWeather.SetDescription(weatherJson["weather"][0]["description"].asString());
+        locationWeather.SetHiTemperature(weatherJson["main"]["temp_max"].asFloat());
+        locationWeather.SetLowTemperature(weatherJson["main"]["temp_min"].asFloat());
+        locationWeather.SetWindSpeed(weatherJson["wind"]["speed"].asFloat());
+        // BUGBUG should be a loop
+        std::string iconName = weatherJson["weather"][0]["icon"].asString();
 
-    // BUGBUG need try catch
-    locationWeather.SetCityName(weatherJson["name"].asString());
-    locationWeather.SetCurrentTemperature(weatherJson["main"]["temp"].asFloat());
-    locationWeather.SetDescription(weatherJson["weather"][0]["description"].asString());
-    locationWeather.SetHiTemperature(weatherJson["main"]["temp_max"].asFloat());
-    locationWeather.SetLowTemperature(weatherJson["main"]["temp_min"].asFloat());
-    locationWeather.SetWindSpeed(weatherJson["wind"]["speed"].asFloat());
-    // BUGBUG should be a loop
-    std::string iconName = weatherJson["weather"][0]["icon"].asString();
-
-    locationWeather.SetIcon(CreateWeatherIcon(iconName));
+        locationWeather.SetIcon(CreateWeatherIcon(iconName));
+    }
 
     return locationWeather;
 }
-
-#include <fstream>
 
 QPixmap COpenWeatherMapReporter::CreateWeatherIcon(const std::string& iconName) const
 {
@@ -75,7 +87,7 @@ QPixmap COpenWeatherMapReporter::CreateWeatherIcon(const std::string& iconName) 
 
 CRestResponse::BinaryData COpenWeatherMapReporter::DownloadWeatherPng(const std::string& iconName) const
 {
-    CRestResponse iconResponse = CallIconRestAPI(iconName);
+    CRestResponse iconResponse = CallIconRestApi(iconName);
     if (iconResponse.Success())
     {
         return iconResponse.GetBinaryBody();
@@ -120,7 +132,7 @@ CRestResponse COpenWeatherMapReporter::CallCityRestApi(const CLocationWeather::C
     return restResponse;
 }
 
-CRestResponse COpenWeatherMapReporter::CallIconRestAPI(const std::string& iconName) const
+CRestResponse COpenWeatherMapReporter::CallIconRestApi(const std::string& iconName) const
 {
     // http://openweathermap.org/img/w/09d.png?APPID=da65fafb6cb9242168b7724fb5ab75e7
     const char* iconNameFmt = "ICONNAME";
@@ -136,4 +148,46 @@ CRestResponse COpenWeatherMapReporter::CallIconRestAPI(const std::string& iconNa
 
     return restResponse;
 }
+
+CLocationWeather::CityNameList COpenWeatherMapReporter::ParseFindCityJson(const std::string& findCityResponseJson) const
+{
+    CLocationWeather::CityNameList cityNameList;
+
+    Json::CharReaderBuilder builder;
+    Json::CharReader * jsonReader = builder.newCharReader();
+    Json::Value findCityJson;
+    std::string errors;
+
+    auto success = jsonReader->parse(findCityResponseJson.c_str(), findCityResponseJson.c_str() + findCityResponseJson.size(), &findCityJson, &errors);
+    if (success)
+    {
+        auto cityListJson = findCityJson["list"];
+
+        for (auto cityJson = cityListJson.begin(); cityJson != cityListJson.end(); ++cityJson)
+        {
+            cityNameList.push_back((*cityJson)["name"].asString() + ", " + (*cityJson)["sys"]["country"].asString());
+        }
+    }
+
+    return cityNameList;
+}
+
+CRestResponse COpenWeatherMapReporter::CallFindCityRestApi(const std::string& findCity) const
+{
+    // https://api.openweathermap.org/data/2.5/find?q=London&type=like&appid=da65fafb6cb9242168b7724fb5ab75e7
+    const char* cityNameFmt = "CITYNAME";
+    std::string cityWeatherUrl("/data/2.5/find?q=CITYNAME&APPID=da65fafb6cb9242168b7724fb5ab75e7");
+
+    ReplaceSubString(cityWeatherUrl, cityNameFmt, findCity);
+    ReplaceSubString(cityWeatherUrl, " ", "%20");
+
+    std::ostringstream urlStrStream;
+    urlStrStream << sProtocall << sDomainName << cityWeatherUrl;
+    std::string weatherUrl = urlStrStream.str();
+
+    auto restResponse = _restRequester->GetRequest(weatherUrl);
+
+    return restResponse;
+}
+
 

@@ -2,13 +2,14 @@
 #define LOCATIONWEATHER_H
 
 #include <string>
-#include <list>
+#include <vector>
 #include <QPixmap>
 
 class CLocationWeather
 {
 public:
-    typedef std::string         CityName;
+    typedef std::string             CityName;
+    typedef std::vector<CityName>   CityNameList;
 
     CLocationWeather();
     CLocationWeather(CityName cityName);

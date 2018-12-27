@@ -9,6 +9,7 @@ public:
     virtual ~IWeatherReporter() {}
 
     virtual CLocationWeather GetWeather(const CLocationWeather::CityName& cityName) const = 0;
+    virtual CLocationWeather::CityNameList FindCity(const std::string& findCity) const = 0;
 };
 
 #endif // IWEATHERREPORTER_H
