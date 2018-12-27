@@ -22,8 +22,7 @@ SOURCES += \
     openweathermapreporter.cpp \
     restresponse.cpp \
     curlrestrequester.cpp \
-    ThirdParty/jsoncpp/dist/jsoncpp.cpp \
-    weatherwidgetitem.cpp
+    ThirdParty/jsoncpp/dist/jsoncpp.cpp
 
 HEADERS += \
         weatherreportwindow.h \
@@ -32,12 +31,10 @@ HEADERS += \
     openweathermapreporter.h \
     restresponse.h \
     irestrequester.h \
-    curlrestrequester.h \
-    weatherwidgetitem.h
+    curlrestrequester.h
 
 FORMS += \
-        weatherreportwindow.ui \
-    weatherwidgetitem.ui
+        weatherreportwindow.ui
 
 #INCLUDEPATH += /usr/local/include
 INCLUDEPATH += $$PWD/ThirdParty/jsoncpp/include
