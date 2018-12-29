@@ -12,6 +12,7 @@ namespace Ui {
 class CWeatherReportWindow;
 }
 
+// Main weather window with list of city weather summaries
 class CWeatherReportWindow : public QMainWindow
 {
     Q_OBJECT
@@ -21,6 +22,7 @@ public:
     ~CWeatherReportWindow();
 
 private slots:
+    // Event handlers
     void onDetailButtonclicked();
     void onAddButtonclicked();
     void onRemoveButtonclicked();

@@ -27,11 +27,12 @@ CWeatherReportWindow::CWeatherReportWindow(QWidget *parent) :
     assert(connected);
 
     const char* saltLakeName = "Salt Lake City";
-    const char* londonName = "London";
+    const char* sanFranciscoName = "San Francisco";
     const char* newYorkName = "New York";
-    _cityNameList.push_back(CLocationWeather(saltLakeName));
-    _cityNameList.push_back(CLocationWeather(londonName));
-    _cityNameList.push_back(CLocationWeather(newYorkName));
+    const char* usName = "US";
+    _cityNameList.push_back(CLocationWeather(saltLakeName, usName));
+    _cityNameList.push_back(CLocationWeather(sanFranciscoName, usName));
+    _cityNameList.push_back(CLocationWeather(newYorkName, usName));
 
     ui->_locationListWidget->setIconSize(QSize(100, 100));
 
@@ -56,14 +57,16 @@ void CWeatherReportWindow::UpdateWeatherList()
 
     ui->_locationListWidget->clear();
 
+    // create City weather summary list items
     for (auto& cityWeather : _cityNameList)
     {
-        cityWeather = weatherReporter.GetWeather(cityWeather.GetCityName());
+        cityWeather = weatherReporter.GetWeather(cityWeather.GetCityName(), cityWeather.GetCountryName());
 
         QListWidgetItem* cityWidgetItem = new QListWidgetItem();
         cityWidgetItem->setIcon(cityWeather.GetIcon());
         std::string cityTempStr;
-        cityTempStr = cityWeather.GetCityName() + " - " + cityWeather.GetTemperatureString(cityWeather.GetCurrentTemperature());
+        cityTempStr = cityWeather.GetCityName() + ", " + cityWeather.GetCountryName() + " - " +
+                cityWeather.GetTemperatureString(cityWeather.GetCurrentTemperature());
         cityWidgetItem->setText(cityTempStr.c_str());
         cityWidgetItem->setBackgroundColor(QColor(220, 220, 220));
         ui->_locationListWidget->addItem(cityWidgetItem);
@@ -93,9 +96,10 @@ void CWeatherReportWindow::onAddButtonclicked()
     addCityDialog.ShowDialog();
 
     auto cityName = addCityDialog.GetCityName();
-    if (!cityName.empty())
+    auto countryName = addCityDialog.GetCountryName();
+    if (!cityName.empty() && !countryName.empty())
     {
-        _cityNameList.push_back(CLocationWeather(cityName));
+        _cityNameList.push_back(CLocationWeather(cityName, countryName));
 
         UpdateWeatherList();
     }

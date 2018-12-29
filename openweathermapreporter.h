@@ -7,14 +7,17 @@
 
 #include <memory>
 
+// Open Weather Map implementation of Weather report interface
 class COpenWeatherMapReporter :public IWeatherReporter
 {
 public:
     COpenWeatherMapReporter(std::shared_ptr<IRestRequester>& restRequester);
     virtual ~COpenWeatherMapReporter() override;
 
-    CLocationWeather GetWeather(const CLocationWeather::CityName& cityName) const override;
-
+    // Get weather info for a city
+    CLocationWeather GetWeather(const CLocationWeather::CityName& cityName,
+                                const CLocationWeather::CountryName& countryName) const override;
+    // Get list of city matching find city
     CLocationWeather::CityNameList FindCity(const std::string& findCity) const override;
 
 private:
@@ -25,7 +28,8 @@ private:
     CRestResponse::BinaryData       DownloadWeatherPng(const std::string& iconName) const;
     CLocationWeather::CityNameList  ParseFindCityJson(const std::string& findCityResponseJson) const;
 
-    CRestResponse                   CallCityRestApi(const CLocationWeather::CityName& cityName) const;
+    CRestResponse                   CallCityRestApi(const CLocationWeather::CityName& cityName,
+                                                    const CLocationWeather::CountryName& countryName) const;
     CRestResponse                   CallIconRestApi(const std::string& iconName) const;
     CRestResponse                   CallFindCityRestApi(const std::string& findCity) const;
 };

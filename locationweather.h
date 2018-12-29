@@ -5,17 +5,22 @@
 #include <vector>
 #include <QPixmap>
 
+// City Weather Data Object
 class CLocationWeather
 {
 public:
     typedef std::string             CityName;
+    typedef std::string             CountryName;
     typedef std::vector<CityName>   CityNameList;
 
     CLocationWeather();
-    CLocationWeather(CityName cityName);
+    CLocationWeather(CityName cityName, CountryName countryName);
 
     CityName    GetCityName() const;
     void        SetCityName(CityName cityName);
+
+    CountryName GetCountryName() const;
+    void        SetCountryName(CountryName countryName);
 
     QPixmap     GetIcon() const;
     void        SetIcon(QPixmap icon);
@@ -39,6 +44,7 @@ public:
 
 private:
     CityName    _cityName;
+    CountryName _countryName;
     QPixmap     _icon;
     std::string _description;
     float       _currentTemperature;

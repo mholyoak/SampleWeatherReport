@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 
+// Results returned from REST API calls
 class CRestResponse
 {
 public:

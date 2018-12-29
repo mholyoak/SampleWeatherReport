@@ -35,6 +35,7 @@ CRestResponse CCurlRestRequester::GetRequest(const std::string& getUrl) const
     curl = curl_easy_init();
     if (curl)
     {
+        // TODO - The GetRequest and GetBinaryRequest are very similar and should be refactored to share code
         auto res = curl_easy_setopt(curl, CURLOPT_URL, getUrl.c_str());
         if (res != CURLE_OK)
         {
@@ -98,6 +99,7 @@ CRestResponse CCurlRestRequester::GetBinaryRequest(const std::string& getUrl) co
     curl = curl_easy_init();
     if (curl)
     {
+        // TODO - The GetRequest and GetBinaryRequest are very similar and should be refactored to share code
         auto res = curl_easy_setopt(curl, CURLOPT_URL, getUrl.c_str());
         if (res != CURLE_OK)
         {

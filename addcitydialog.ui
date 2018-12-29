@@ -37,7 +37,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QDialogButtonBox" name="buttonBox">
+    <widget class="QDialogButtonBox" name="_buttonBox">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
@@ -51,7 +51,7 @@
  <resources/>
  <connections>
   <connection>
-   <sender>buttonBox</sender>
+   <sender>_buttonBox</sender>
    <signal>accepted()</signal>
    <receiver>CAddCityDialog</receiver>
    <slot>accept()</slot>
@@ -67,7 +67,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>buttonBox</sender>
+   <sender>_buttonBox</sender>
    <signal>rejected()</signal>
    <receiver>CAddCityDialog</receiver>
    <slot>reject()</slot>

@@ -58,7 +58,14 @@
             <item>
              <widget class="QLabel" name="label">
               <property name="text">
-               <string>City Name:</string>
+               <string>City:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_2">
+              <property name="text">
+               <string>Country:</string>
               </property>
              </widget>
             </item>
@@ -118,6 +125,13 @@
            <layout class="QVBoxLayout" name="verticalLayout_2">
             <item>
              <widget class="QLabel" name="_cityName">
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="_countryName">
               <property name="text">
                <string/>
               </property>

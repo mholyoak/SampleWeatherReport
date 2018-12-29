@@ -9,8 +9,9 @@ CLocationWeather::CLocationWeather()
 
 }
 
-CLocationWeather::CLocationWeather(CityName cityName) :
+CLocationWeather::CLocationWeather(CityName cityName, CountryName countryName) :
     _cityName(cityName),
+    _countryName(countryName),
     _description(""),
     _currentTemperature(0.0),
     _hiTemperature(0.0),
@@ -29,6 +30,18 @@ void CLocationWeather::SetCityName(CityName cityName)
 {
     _cityName = cityName;
 }
+
+CLocationWeather::CountryName CLocationWeather::GetCountryName() const
+{
+    return _countryName;
+}
+
+void CLocationWeather::SetCountryName(CountryName countryName)
+{
+    _countryName = countryName;
+}
+
+
 
 QPixmap CLocationWeather::GetIcon() const
 {

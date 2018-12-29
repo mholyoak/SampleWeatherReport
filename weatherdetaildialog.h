@@ -9,6 +9,7 @@ namespace Ui {
 class CWeatherDetailDialog;
 }
 
+// Dialog to show weather details for a city
 class CWeatherDetailDialog : public QDialog
 {
     Q_OBJECT
@@ -17,6 +18,7 @@ public:
     explicit CWeatherDetailDialog(QWidget *parent = nullptr);
     ~CWeatherDetailDialog();
 
+    // Displays the dialog with weather details
     void ShowDetail(const CLocationWeather& locationWeather);
 
 private:
