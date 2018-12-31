@@ -15,7 +15,9 @@ another directory as well. The test application uses Boost Test. I would add
 more tests as well with additional time. It currently only has one test. It 
 mocks QPixmap and the open weather map REST API. I would have addressed getting
 updates to the weather report. I would make the updating of the list of cities 
-more responsive. I'm sure I could come up with many more items as well.
+more responsive. I'd create a easy way to deploy the applcation as it uses
+Qt shared libraries which makes it a bit tricky to deploy. I'm sure I could 
+come up with many more items as well.
 
 ## Build Application
 #### Download and Install Qt at https://www.qt.io/download version 4.7.2 or later
