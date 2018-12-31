@@ -2,7 +2,9 @@ cmake_minimum_required(VERSION 3.12)
 
 set(CMAKE_CXX_STANDARD 11)
 
-include_directories(.)
+include_directories(.
+	/usr/local/Cellar/boost/1.68.0/include
+	../ThirdParty/jsoncpp/include/)
 
 # add the executable
 add_executable (weathertests
