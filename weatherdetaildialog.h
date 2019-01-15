@@ -20,6 +20,8 @@ public:
 
     // Displays the dialog with weather details
     void ShowDetail(const CLocationWeather& locationWeather);
+protected:
+      void paintEvent(QPaintEvent* event) override;
 
 private:
     std::shared_ptr<Ui::CWeatherDetailDialog> ui;

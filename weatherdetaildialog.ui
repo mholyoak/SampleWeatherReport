@@ -7,11 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>436</width>
-    <height>303</height>
+    <height>318</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Weather Detail</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_3">
    <item>

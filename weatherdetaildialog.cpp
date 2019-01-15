@@ -1,6 +1,8 @@
 #include "weatherdetaildialog.h"
 #include "ui_weatherdetaildialog.h"
 
+#include <QPainter>
+
 #include <iostream>
 #include <iomanip>
 #include <sstream>
@@ -9,6 +11,11 @@ CWeatherDetailDialog::CWeatherDetailDialog(QWidget *parent) :
     QDialog(parent),
     ui(std::make_shared<Ui::CWeatherDetailDialog>())
 {
+    setWindowFlags(Qt::Widget | Qt::FramelessWindowHint);
+    setParent(nullptr); // Create TopLevel-Widget
+    setAttribute(Qt::WA_NoSystemBackground, true);
+    // If removed paintEvent method this makes background 100% transparent
+    //setAttribute(Qt::WA_TranslucentBackground, true);
     ui->setupUi(this);
 }
 
@@ -36,4 +43,13 @@ void CWeatherDetailDialog::ShowDetail(const CLocationWeather& locationWeather)
 
     // Display Dialog
     exec();
+}
+
+void CWeatherDetailDialog::paintEvent(QPaintEvent* /*event*/)
+{
+    //QColor backgroundColor = palette().light().color();
+    QColor backgroundColor(214, 226, 255);
+    backgroundColor.setAlpha(150);
+    QPainter customPainter(this);
+    customPainter.fillRect(rect(),backgroundColor);
 }
