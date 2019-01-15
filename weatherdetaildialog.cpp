@@ -7,14 +7,13 @@
 
 CWeatherDetailDialog::CWeatherDetailDialog(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::CWeatherDetailDialog)
+    ui(std::make_shared<Ui::CWeatherDetailDialog>())
 {
     ui->setupUi(this);
 }
 
 CWeatherDetailDialog::~CWeatherDetailDialog()
 {
-    delete ui;
 }
 
 void CWeatherDetailDialog::ShowDetail(const CLocationWeather& locationWeather)

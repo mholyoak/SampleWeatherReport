@@ -22,7 +22,7 @@ public:
     void ShowDetail(const CLocationWeather& locationWeather);
 
 private:
-    Ui::CWeatherDetailDialog *ui;
+    std::shared_ptr<Ui::CWeatherDetailDialog> ui;
 };
 
 #endif // WEATHERDETAILDIALOG_H
