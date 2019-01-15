@@ -1,0 +1,13 @@
+#ifndef PROJECT_QPIXMAP_H
+#define PROJECT_QPIXMAP_H
+
+// This is a MOCK class so don't need to include Qt
+class QPixmap {
+public:
+    QPixmap();
+
+    bool loadFromData(const unsigned char *data, unsigned int len);
+};
+
+
+#endif //PROJECT_QPIXMAP_H

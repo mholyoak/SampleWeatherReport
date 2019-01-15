@@ -9,7 +9,7 @@ static const char* sProtocall = "https://";
 // The APP ID should probably be saved in a config file so that it isn't saved with the code
 static const char* sAppId = "da65fafb6cb9242168b7724fb5ab75e7";
 
-COpenWeatherMapReporter::COpenWeatherMapReporter(std::shared_ptr<IRestRequester> &restRequester) :
+COpenWeatherMapReporter::COpenWeatherMapReporter(std::shared_ptr<IRestRequester> restRequester) :
     _restRequester(restRequester)
 {
 

@@ -11,7 +11,7 @@
 class COpenWeatherMapReporter :public IWeatherReporter
 {
 public:
-    COpenWeatherMapReporter(std::shared_ptr<IRestRequester>& restRequester);
+    COpenWeatherMapReporter(std::shared_ptr<IRestRequester> restRequester);
     virtual ~COpenWeatherMapReporter() override;
 
     // Get weather info for a city
