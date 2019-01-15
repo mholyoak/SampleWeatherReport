@@ -1,0 +1,5 @@
+.DS_Store
+SampleWeatherReport.pro.user
+ThirdParty/
+.idea
+cmake-build-debug/
