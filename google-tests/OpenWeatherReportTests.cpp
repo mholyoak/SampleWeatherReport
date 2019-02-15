@@ -1,27 +1,4 @@
-#include "RestRequesterMock.h"
-#include "../openweathermapreporter.h"
-#include <gtest/gtest.h>
-#include <gmock/gmock.h>
-
-using ::testing::_;
-using ::testing::Return;
-
-class OpenWeatherReportTest : public ::testing::Test
-{
-protected:
-    OpenWeatherReportTest() :
-        _restRequesterMock(std::make_shared<CRestRequesterMock>())
-    {
-
-    }
-
-    void SetUp() override
-    {
-
-    }
-
-    std::shared_ptr<CRestRequesterMock> _restRequesterMock;
-};
+R
 
 TEST_F(OpenWeatherReportTest, FindCity)
 {
